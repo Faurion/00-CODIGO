@@ -5,10 +5,12 @@ console.clear()
 
 let mensajeACifrar = "CODIGO"
 console.log("Mensaje: "+mensajeACifrar)
-console.log("")
+
 
 // const ALFABETO_ESPAÑOL = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 const ALFABETO_ESPAÑOL = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+console.log(`Tamaño Alfabeto ${ALFABETO_ESPAÑOL.length}`)
+console.log("")
 
 let matrizLlave = [
     [5, 17, 20],
