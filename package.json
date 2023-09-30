@@ -2,7 +2,6 @@
   "name": "criptografia",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "EJERCICIO1_CIFRADO_CESAR_.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Faurion/00-CODIGO/issues"
   },
-  "homepage": "https://github.com/Faurion/00-CODIGO#readme"
+  "homepage": "https://github.com/Faurion/00-CODIGO#readme",
+  "dependencies": {
+    "crypto-js": "^4.1.1"
+  }
 }
