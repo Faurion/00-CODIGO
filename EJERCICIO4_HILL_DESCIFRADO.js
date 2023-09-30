@@ -1,111 +1,128 @@
+console.clear()
 
-function print(M, msg) {
-    console.log("======" + msg + "=========")
-    for(var k=0; k<M.length; ++k) {
-      console.log(M[k]);
-    }
-    console.log("==========================")
-  }
-  
-  function diagonalize(M) {
-    var m = M.length;
-    var n = M[0].length;
-    for(var k=0; k<Math.min(m,n); ++k) {
-      // Find the k-th pivot
-      i_max = findPivot(M, k);
-      if (A[i_max, k] == 0)
-        throw "matrix is singular";
-      swap_rows(M, k, i_max);
-      // Do for all rows below pivot
-      for(var i=k+1; i<m; ++i) {
-        // Do for all remaining elements in current row:
-        var c = A[i][k] / A[k][k];
-        for(var j=k+1; j<n; ++j) {
-          A[i][j] = A[i][j] - A[k][j] * c;
+//ALUMNO: MIGUEL ANGEL CRISPIN CABRERA
+// Método de HILL
+
+import { create, all } from 'mathjs'
+
+const config = {
+//   matrix: 'Array' // Choose 'Matrix' (default) or 'Array'
+    number: 'Fraction'
+}
+const math = create(all, config)
+
+
+let mensajeDescifrar = "ZFMLUHJHGLOCJDJZMPIEZ"
+console.log("Mensaje: "+mensajeDescifrar)
+
+
+const ALFABETO_ESPAÑOL = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+// const ALFABETO_ESPAÑOL = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+console.log(`Tamaño Alfabeto ${ALFABETO_ESPAÑOL.length}`)
+console.log("")
+
+let k = [
+    [2, 11, 0],
+    [22, 4, 4],
+    [9, 4, 12]
+]
+
+console.log("Matriz llave")
+console.table(k)
+let determinanteClave = math.det(k)
+// console.log(determinanteClave)
+
+console.log("Determinante de Llave")
+let moddd= math.det(determinanteClave) % 27
+console.log(moddd)
+
+let matrizCofactores = [[],[],[]]
+
+ matrizCofactores[0].push((+1)*((k[1][1] * k[2][2]) - (k[1][2] * k[2][1])))
+ matrizCofactores[0].push((-1)*((k[1][0] * k[2][2]) - (k[1][2] * k[2][0])))
+ matrizCofactores[0].push((+1)*((k[1][0] * k[2][1]) - (k[1][1] * k[2][0])))
+
+ matrizCofactores[1].push((-1)*((k[0][1] * k[2][2]) - (k[0][2] * k[2][1])))
+ matrizCofactores[1].push((+1)*((k[0][0] * k[2][2]) - (k[0][2] * k[2][0])))
+ matrizCofactores[1].push((-1)*((k[0][0] * k[2][1]) - (k[0][1] * k[2][0])))
+
+ matrizCofactores[2].push((+1)*((k[0][1] * k[1][2]) - (k[0][2] * k[1][1])))
+ matrizCofactores[2].push((-1)*((k[0][0] * k[1][2]) - (k[0][2] * k[1][0])))
+ matrizCofactores[2].push((+1)*((k[0][0] * k[1][1]) - (k[0][1] * k[1][0])))
+
+ console.log("")
+console.log("Matriz Cofactores")
+console.table(matrizCofactores)
+
+console.log("Multiplicacion k-1 (-2)")
+let k1 = math.multiply(matrizCofactores,-2)
+console.table(k1)
+
+console.log("Matriz de descifrado resultante: ")
+let final = math.mod(k1,(ALFABETO_ESPAÑOL.length))
+console.table(final)
+
+
+
+
+function obtenerValorAlfabeto(arregloLetras, alfabeto) {
+    let indicesAlfabeto = []
+    arregloLetras.forEach(element => {
+        indicesAlfabeto.push(alfabeto.indexOf(element))
+    })
+    return indicesAlfabeto
+}
+
+let arregloUnidimensional = mensajeDescifrar.split("")
+let valoresAlfabeto = obtenerValorAlfabeto(arregloUnidimensional, ALFABETO_ESPAÑOL)
+console.log("")
+console.log("Reemplazo de Indices")
+console.log(valoresAlfabeto)
+// console.table(valoresAlfabeto)
+
+function separarMatriz(lista, limiteSubElementos) {
+    //Separar matriz unidimensional, en bidimensional con parámetro de limite en cada subelemento
+    var matrix = [], i, k;
+    for (i = 0, k = -1; i < lista.length; i++) {
+        if (i % limiteSubElementos === 0) {
+            k++;
+            matrix[k] = [];
         }
-        // Fill lower triangular matrix with zeros
-        A[i][k] = 0;
-      }
+        matrix[k].push(lista[i]);
     }
-  }
-  
-  function findPivot(M, k) {
-    var i_max = k;
-    for(var i=k+1; i<M.length; ++i) {
-      if (Math.abs(M[i][k]) > Math.abs(M[i_max][k])) {
-        i_max = i;
-      }
-    }
-    return i_max;
-  }
-  
-  function swap_rows(M, i_max, k) {
-    if (i_max != k) {
-      var temp = A[i_max];
-      A[i_max] = A[k];
-      A[k] = temp;
-    }
-  }
-  
-  function makeM(A, b) {
-    for(var i=0; i<A.length; ++i) {
-      A[i].push(b[i]);
-    }
-  }
-  
-  function substitute(M) {
-    var m = M.length;
-    for(var i=m-1; i>=0; --i) {
-      var x = M[i][m] / M[i][i];
-      for(var j=i-1; j>=0; --j) {
-        M[j][m] -= x * M[j][i];
-        M[j][i] = 0;
-      }
-      M[i][m] = x;
-      M[i][i] = 1;
-    }
-  }
-  
-  function extractX(M) {
-    var x = [];
-    var m = A.length;
-    var n = A[0].length;
-    for(var i=0; i<m; ++i){
-      x.push(A[i][n-1]);
-    }
-    return x;
-  }
-  
-  function solve(A, b) {
-    //print(A, "A");
-    makeM(A,b);
-    //print(A, "M");
-    diagonalize(A);
-    //print(A, "diag");
-    substitute(A);
-    //print(A, "subst");
-    var x = extractX(A);
-    //print(x, "x");
-    return x;
-  }
-  
-  // sample from: http://mathworld.wolfram.com/GaussianElimination.html
-  
-  A = [
-    [9,3,4],
-    [4,3,4],
-    [1,1,1]
-  ]
-  
-  b = [7,8,3]
-  
-  print(A, " A ");
-  print(b, " b ");
-  
-  var x = solve(A, b);
-  
-  print(x, " x ");
+    return matrix;
+}
+
+let matrizSeparada = separarMatriz(valoresAlfabeto, 3);
+console.log("")
+console.log("Matriz cifrada")
+console.table(matrizSeparada)
+
+let mensajeTernas = []
+matrizSeparada.forEach(element => {
+    //multiplicacion de cada terna por la matriz de descifrado
+    let result = math.multiply(element,final)
+    mensajeTernas.push(result)
+})
+
+console.log("Ternas * Matriz de Descifrado")
+console.table(mensajeTernas)
+
+console.log("Calculo de %")
+let modTernas = math.mod(mensajeTernas,(ALFABETO_ESPAÑOL.length))
+console.table(modTernas)
 
 
-  
+console.log("Reemplazo de Indices del Alfabeto")
+let arregloFinal = []
+modTernas.forEach(element => {
+    element.forEach(subElement => {
+        let letra = ALFABETO_ESPAÑOL[subElement]
+        arregloFinal.push(letra)
+    })
+})
 
+console.log(arregloFinal)
+
+let stringFinal = arregloFinal.join("")
+console.log("Mensaje Descifrado:" + stringFinal)

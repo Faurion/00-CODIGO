@@ -3,12 +3,12 @@ console.clear()
 //ALUMNO: MIGUEL ANGEL CRISPIN CABRERA
 // Método de HILL
 
-let mensajeACifrar = "CODIGO"
+let mensajeACifrar = "MIGUEL CRISPIN"
 console.log("Mensaje: "+mensajeACifrar)
 
 
-// const ALFABETO_ESPAÑOL = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-const ALFABETO_ESPAÑOL = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+const ALFABETO_ESPAÑOL = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+// const ALFABETO_ESPAÑOL = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 console.log(`Tamaño Alfabeto ${ALFABETO_ESPAÑOL.length}`)
 console.log("")
 
